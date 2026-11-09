@@ -1,0 +1,663 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>catálogo de colecciones · mitsu hunt</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --ink: #454545;
+    --muted: #858585;
+    --line: #e8e5e1;
+    --paper: #ffffff;
+    --background: #faf9f7;
+}
+
+body {
+    background: var(--background);
+    color: var(--ink);
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    padding: 55px 0 70px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.brand {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #999;
+    margin-bottom: 13px;
+}
+
+h1 {
+    font-size: clamp(28px, 5vw, 39px);
+    font-weight: normal;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 8px;
+}
+
+.note {
+    background: #f1efeb;
+    border: 1px solid #e9e5df;
+    padding: 22px 25px;
+    margin-bottom: 42px;
+}
+
+.note-title {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 9px;
+    color: #77716a;
+}
+
+.note p {
+    font-size: 13px;
+    color: #625e59;
+    margin-bottom: 8px;
+}
+
+.note p:last-child {
+    margin-bottom: 0;
+}
+
+.section-heading {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 7px;
+}
+
+.section-description {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 22px;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.filter-box {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 20px;
+}
+
+.filter-box:nth-child(1) {
+    border-top: 3px solid #d9c9c3;
+}
+
+.filter-box:nth-child(2) {
+    border-top: 3px solid #c9d6ce;
+}
+
+.filter-box:nth-child(3) {
+    border-top: 3px solid #d5cfe0;
+}
+
+.filter-box:nth-child(4) {
+    border-top: 3px solid #ded6c5;
+}
+
+.filter-number {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #999;
+    margin-bottom: 8px;
+}
+
+.filter-box label {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+select, input {
+    width: 100%;
+    min-height: 43px;
+    border: 1px solid #e6e3df;
+    border-radius: 0;
+    background: #fff;
+    padding: 10px 12px;
+    color: #555;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    outline: none;
+}
+
+select:focus, input:focus {
+    border-color: #aaa19a;
+}
+
+select:disabled {
+    background: #f7f6f4;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.search-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 35px;
+}
+
+.search-row input {
+    flex: 1;
+}
+
+button {
+    border: 1px solid #d9d5d0;
+    background: white;
+    padding: 10px 18px;
+    color: #666;
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover {
+    background: #f1efeb;
+}
+
+.results-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 13px;
+    margin-bottom: 20px;
+}
+
+.results-heading h2 {
+    font-size: 19px;
+    font-weight: normal;
+}
+
+.results-count {
+    color: var(--muted);
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--line);
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f2f0ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-placeholder {
+    color: #aaa39c;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.card-content {
+    padding: 17px;
+}
+
+.card-franchise {
+    color: #999;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.card h3 {
+    font-size: 17px;
+    font-weight: normal;
+    margin: 5px 0;
+}
+
+.card-collection {
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 13px;
+}
+
+.card-status {
+    display: inline-block;
+    padding: 4px 8px;
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    background: #f0eee9;
+    color: #706b63;
+}
+
+.card-method {
+    color: #888;
+    font-size: 11px;
+    margin-top: 11px;
+}
+
+.demo-label {
+    display: block;
+    margin-top: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 9px;
+    color: #a17d69;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    padding: 55px 20px;
+    text-align: center;
+    background: white;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+}
+
+footer {
+    border-top: 1px solid var(--line);
+    margin-top: 55px;
+    padding-top: 22px;
+    text-align: center;
+    color: #999;
+    font-size: 11px;
+}
+
+@media (max-width: 700px) {
+    .container {
+        padding-top: 35px;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .card-content {
+        padding: 12px;
+    }
+
+    .card h3 {
+        font-size: 15px;
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+
+    .search-row button {
+        min-height: 40px;
+    }
+}
+
+@media (max-width: 390px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+<main class="container">
+
+<header>
+    <div class="brand">mitsu hunt</div>
+    <h1>catálogo de colecciones</h1>
+    <p class="subtitle">explora las colecciones y personajes que podemos ayudarte a buscar</p>
+</header>
+
+<section class="note">
+    <div class="note-title">nota importante</div>
+    <p>este catálogo es solo una muestra de algunas colecciones que hemos revisado. no incluye todas las colecciones disponibles y todavía se encuentra en construcción, ya que su actualización requiere tiempo.</p>
+    <p>¿buscas una colección o personaje que no aparece aquí? puedes consultarnos igualmente. estaremos encantados de revisar tu solicitud.</p>
+</section>
+
+<section>
+    <h2 class="section-heading">explora el catálogo</h2>
+    <p class="section-description">utiliza los filtros para encontrar la colección o el personaje que estás buscando.</p>
+
+    <div class="filters">
+
+        <div class="filter-box">
+            <div class="filter-number">01 · LICENCIA</div>
+            <label for="franchise">licencia o franquicia</label>
+            <select id="franchise">
+                <option value="">todas las licencias</option>
+            </select>
+        </div>
+
+        <div class="filter-box">
+            <div class="filter-number">02 · PERSONAJE</div>
+            <label for="character">personaje</label>
+            <select id="character" disabled>
+                <option value="">todos los personajes</option>
+            </select>
+        </div>
+
+        <div class="filter-box">
+            <div class="filter-number">03 · COLECCIÓN</div>
+            <label for="collection">colección o línea</label>
+            <select id="collection" disabled>
+                <option value="">todas las colecciones</option>
+            </select>
+        </div>
+
+        <div class="filter-box">
+            <div class="filter-number">04 · IDENTIFICACIÓN</div>
+            <label for="method">método de identificación</label>
+            <select id="method">
+                <option value="">todos los métodos</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div class="search-row">
+        <input id="search" type="search" placeholder="buscar personaje o colección...">
+        <button id="clear">limpiar filtros</button>
+    </div>
+</section>
+
+<section>
+    <div class="results-heading">
+        <h2>colecciones disponibles en el catálogo</h2>
+        <span class="results-count" id="count"></span>
+    </div>
+
+    <div class="cards" id="cards"></div>
+</section>
+
+<footer>
+    mitsu hunt · santiago, chile
+</footer>
+
+</main>
+
+<script>
+/*
+  DATOS DE DEMOSTRACIÓN
+
+  Estos registros son ficticios y sirven solamente
+  para probar el funcionamiento de los filtros.
+
+  Cuando incorpores tus colecciones reales,
+  reemplaza estos registros por tus propios datos.
+*/
+
+const collections = [
+    {
+        franchise: "Sanrio",
+        character: "Kuromi",
+        collection: "Colección de ejemplo 01",
+        method: "Pesaje registrado",
+        status: "Evaluada",
+        image: "",
+        demo: true
+    },
+    {
+        franchise: "Sanrio",
+        character: "Hello Kitty",
+        collection: "Colección de ejemplo 02",
+        method: "Tarjeta visible",
+        status: "Evaluada",
+        image: "",
+        demo: true
+    },
+    {
+        franchise: "Sanrio",
+        character: "My Melody",
+        collection: "Colección de ejemplo 03",
+        method: "Pesaje registrado",
+        status: "Evaluada",
+        image: "",
+        demo: true
+    },
+    {
+        franchise: "Disney",
+        character: "Mickey Mouse",
+        collection: "Colección de ejemplo 04",
+        method: "Pendiente de evaluación",
+        status: "Pendiente",
+        image: "",
+        demo: true
+    }
+];
+
+const franchiseSelect = document.getElementById("franchise");
+const characterSelect = document.getElementById("character");
+const collectionSelect = document.getElementById("collection");
+const methodSelect = document.getElementById("method");
+const searchInput = document.getElementById("search");
+const cards = document.getElementById("cards");
+const count = document.getElementById("count");
+
+function unique(values) {
+    return [...new Set(values)].sort((a, b) =>
+        a.localeCompare(b, "es")
+    );
+}
+
+function fillSelect(select, values, defaultText) {
+    select.innerHTML = "";
+
+    const first = document.createElement("option");
+    first.value = "";
+    first.textContent = defaultText;
+    select.appendChild(first);
+
+    unique(values).forEach(value => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+    });
+}
+
+function updateFranchises() {
+    fillSelect(
+        franchiseSelect,
+        collections.map(item => item.franchise),
+        "todas las licencias"
+    );
+
+    updateCharacters();
+}
+
+function updateCharacters() {
+    const franchise = franchiseSelect.value;
+
+    const filtered = collections.filter(item =>
+        !franchise || item.franchise === franchise
+    );
+
+    fillSelect(
+        characterSelect,
+        filtered.map(item => item.character),
+        "todos los personajes"
+    );
+
+    characterSelect.disabled = !franchise;
+
+    updateCollections();
+}
+
+function updateCollections() {
+    const franchise = franchiseSelect.value;
+    const character = characterSelect.value;
+
+    const filtered = collections.filter(item =>
+        (!franchise || item.franchise === franchise) &&
+        (!character || item.character === character)
+    );
+
+    fillSelect(
+        collectionSelect,
+        filtered.map(item => item.collection),
+        "todas las colecciones"
+    );
+
+    collectionSelect.disabled = !character;
+
+    renderCards();
+}
+
+function renderCards() {
+    const franchise = franchiseSelect.value;
+    const character = characterSelect.value;
+    const collection = collectionSelect.value;
+    const method = methodSelect.value;
+    const search = searchInput.value.toLowerCase().trim();
+
+    const results = collections.filter(item => {
+        const matchesFranchise =
+            !franchise || item.franchise === franchise;
+
+        const matchesCharacter =
+            !character || item.character === character;
+
+        const matchesCollection =
+            !collection || item.collection === collection;
+
+        const matchesMethod =
+            !method || item.method === method;
+
+        const searchable =
+            `${item.franchise} ${item.character} ${item.collection}`.toLowerCase();
+
+        const matchesSearch =
+            !search || searchable.includes(search);
+
+        return matchesFranchise &&
+            matchesCharacter &&
+            matchesCollection &&
+            matchesMethod &&
+            matchesSearch;
+    });
+
+    count.textContent =
+        results.length + (results.length === 1 ? " resultado" : " resultados");
+
+    cards.innerHTML = "";
+
+    if (results.length === 0) {
+        cards.innerHTML = `
+            <div class="empty">
+                no encontramos resultados con esos filtros.<br>
+                prueba con otra búsqueda o limpia los filtros.
+            </div>
+        `;
+        return;
+    }
+
+    results.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const imageContent = item.image
+            ? `<img src="${item.image}" alt="${item.collection}" loading="lazy">`
+            : `<span class="image-placeholder">fotografía</span>`;
+
+        card.innerHTML = `
+            <div class="card-image">${imageContent}</div>
+            <div class="card-content">
+                <div class="card-franchise">${item.franchise}</div>
+                <h3>${item.character}</h3>
+                <div class="card-collection">${item.collection}</div>
+                <span class="card-status">${item.status}</span>
+                <div class="card-method">${item.method}</div>
+                ${item.demo ? '<span class="demo-label">registro de demostración</span>' : ''}
+            </div>
+        `;
+
+        cards.appendChild(card);
+    });
+}
+
+franchiseSelect.addEventListener("change", updateCharacters);
+
+characterSelect.addEventListener("change", updateCollections);
+
+collectionSelect.addEventListener("change", renderCards);
+
+methodSelect.addEventListener("change", renderCards);
+
+searchInput.addEventListener("input", renderCards);
+
+document.getElementById("clear").addEventListener("click", () => {
+    franchiseSelect.value = "";
+    characterSelect.value = "";
+    collectionSelect.value = "";
+    methodSelect.value = "";
+    searchInput.value = "";
+
+    updateCharacters();
+});
+
+fillSelect(
+    methodSelect,
+    collections.map(item => item.method),
+    "todos los métodos"
+);
+
+updateFranchises();
+</script>
+
+</body>
+</html>
